@@ -153,4 +153,14 @@ Database
  php bin/console debug:router | findstr categories | OK
  php bin/console debug:router | findstr product
 
+////////////////////////////////////////////////////////////////////////
 
+ceci mérite d'être lu par les développeurs
+
+https://code.claude.com/docs/en/overview
+
+# Overview
+"""
+Claude Code is an agentic coding tool that reads your codebase, edits files, runs commands, and integrates with your development tools. Available in your terminal, IDE, desktop app, and browser.
+
+"""
