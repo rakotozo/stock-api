@@ -16,6 +16,9 @@ use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Patch;
 use Symfony\Component\Serializer\Attribute\Groups;
 
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 #[ApiResource(
     operations: [
@@ -35,6 +38,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
         ),
     ]
 )]
+#[ApiFilter(SearchFilter::class, properties: ['category' => 'exact'])]
 class Product
 {
     #[Groups(['product:read'])]
@@ -166,5 +170,22 @@ class Product
         $this->category = $category;
 
         return $this;
+    }
+
+    #[Groups(['product:read', 'product_supplier:read'])]
+    public function getTotalStock(): int
+    {
+        $total = 0;
+        foreach ($this->productSuppliers as $productSupplier) {
+            $total += $productSupplier->getQuantity();
+        }
+
+        return $total;
+    }
+
+    #[Groups(['product:read', 'product_supplier:read'])]
+    public function isLowStock(): bool
+    {
+        return $this->getTotalStock() <= $this->minStock;
     }
 }

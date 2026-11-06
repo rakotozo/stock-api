@@ -69,17 +69,7 @@ class ProductSupplier
     private Collection $stockMovements;
 
 
-    #[Groups(['product_supplier:read'])]
-    public function getMargin(): ?string
-    {
-        $sellingPrice = $this->product?->getSellingPrice();
 
-        if ($sellingPrice === null || $this->purchasePrice === null) {
-            return null;
-        }
-
-        return bcsub($sellingPrice, $this->purchasePrice, 2);
-    }
 
     public function __construct()
     {
@@ -200,5 +190,15 @@ class ProductSupplier
     {
         $this->sellingPrice = $sellingPrice;
         return $this;
+    }
+
+    #[Groups(['product_supplier:read'])]
+    public function getMargin(): ?string
+    {
+        if ($this->sellingPrice === null || $this->purchasePrice === null) {
+            return null;
+        }
+
+        return bcsub($this->sellingPrice, $this->purchasePrice, 2);
     }
 }

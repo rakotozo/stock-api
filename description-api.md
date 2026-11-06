@@ -48,10 +48,17 @@ POST: http://localhost:8000/api/products
         "name": "Produit 1",
         "reference": "12054",
         "description": "description",
-        "purchasePrice": "200",
-        "sellingPrice": "200",
         "minStock": 1,
         "category": "/api/categories/2"
+    }
+`
+`
+    {
+        "name": "Variateur G5 ",
+        "reference": "12055",
+        "description": "description",
+        "minStock": 1,
+        "category": "/api/categories/3"
     }
 `
 `
@@ -68,6 +75,56 @@ POST: http://localhost:8000/api/products
         "minStock": 1,
         "createdAt": "2026-11-06T07:31:06+01:00",
         "category": "/api/categories/2"
+    }
+`
+
+# Liste des produit avec filtre 
+GET : http://localhost:8000/api/products?category=/api/categories/3
+
+`
+    {
+        "@context": "/api/contexts/Product",
+        "@id": "/api/products",
+        "@type": "Collection",
+        "totalItems": 1,
+        "member": [
+            {
+            "@id": "/api/products/5",
+            "@type": "Product",
+            "id": 5,
+            "name": "Variateur G5 ",
+            "reference": "12055",
+            "description": "description",
+            "minStock": 1,
+            "createdAt": "2026-11-06T15:03:38+01:00",
+            "category": "/api/categories/3",
+            "totalStock": 0,
+            "lowStock": true
+            }
+        ],
+        "view": {
+            "@id": "/api/products?category=%2Fapi%2Fcategories%2F3",
+            "@type": "PartialCollectionView"
+        },
+        "search": {
+            "@type": "IriTemplate",
+            "template": "/api/products{?category,category[]}",
+            "variableRepresentation": "BasicRepresentation",
+            "mapping": [
+            {
+                "@type": "IriTemplateMapping",
+                "variable": "category",
+                "property": "category",
+                "required": false
+            },
+            {
+                "@type": "IriTemplateMapping",
+                "variable": "category[]",
+                "property": "category",
+                "required": false
+            }
+            ]
+        }
     }
 `
 
