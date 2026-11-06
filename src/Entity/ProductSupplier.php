@@ -43,7 +43,7 @@ class ProductSupplier
     private ?Supplier $supplier = null;
 
     #[ORM\Column]
-    #[Groups(['product_supplier:read','product_supplier:write'])]
+    #[Groups(['product_supplier:read'])]
     private int $quantity = 0;
 
     #[Groups(['product_supplier:read','product_supplier:write'])]

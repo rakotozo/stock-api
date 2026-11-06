@@ -14,6 +14,11 @@ use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Patch;
 use Symfony\Component\Serializer\Attribute\Groups;
 
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+
+
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: StockMovementRepository::class)]
 #[ApiResource(
     operations: [
@@ -147,6 +152,32 @@ class StockMovement
         $this->productSupplier = $productSupplier;
 
         return $this;
+    }
+
+    #[Assert\Callback]
+    public function validateStock(ExecutionContextInterface $context): void
+    {
+        if (
+            $this->type === MovementType::OUT
+            && $this->productSupplier !== null
+            && $this->quantity > $this->productSupplier->getQuantity()
+        ) {
+            $context->buildViolation('Stock insuffisant.')
+                ->atPath('quantity')
+                ->addViolation();
+        }
+    }
+
+    #[ORM\PrePersist]
+    public function updateStock(): void
+    {
+        $current = $this->productSupplier->getQuantity();
+
+        $this->productSupplier->setQuantity(
+            $this->type === MovementType::IN
+                ? $current + $this->quantity
+                : $current - $this->quantity
+        );
     }
 
 }

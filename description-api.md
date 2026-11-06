@@ -4,6 +4,7 @@
 php -S localhost:8000 -t public
 
 
+*************************************************************************************
 # Création d'une catégorie
 POST : http://localhost:8000/api/categories
 
@@ -32,6 +33,7 @@ POST : http://localhost:8000/api/categories
     }
 `
 
+*************************************************************************************
 # Création d'un Prouit
 POST: http://localhost:8000/api/products
 
@@ -69,6 +71,7 @@ POST: http://localhost:8000/api/products
     }
 `
 
+*************************************************************************************
 # Création d'un Fournisseur
 POST : http://localhost:8000/api/suppliers
 
@@ -140,4 +143,51 @@ POST : http://localhost:8000/api/product_suppliers
     "createdAt": "2026-11-06T12:04:59+01:00",
     "margin": "-1830.20"
     }
+`
+
+*************************************************************************************
+# Création d'un mouvement de stock, stock détail
+
+POST : http://localhost:8000/api/stock_movements
+
+`
+    Header : 
+        Content-Type : application/ld+json
+        Accept : application/ld+json
+`
+
+`
+    {
+        "quantity": 5,
+        "unitPrice": "20000",
+        "reason": "string",
+        "productSupplier": "/api/product_suppliers/2",
+        "type": "IN"
+    }
+`
+
+`
+    {
+        "@context": "/api/contexts/StockMovement",
+        "@id": "/api/stock_movements/1",
+        "@type": "StockMovement",
+        "id": 1,
+        "quantity": 5,
+        "unitPrice": "20000.00",
+        "reason": "string",
+        "createdAt": "2026-11-06T12:52:31+01:00",
+        "productSupplier": "/api/product_suppliers/2",
+        "type": "IN"
+    }
+`
+## Nouvelle entré en stock de 30 produits
+`
+{
+  "quantity": 30,
+  "unitPrice": "20000",
+  "reason": "Entré en stock",
+  "productSupplier": "/api/product_suppliers/2",
+  "type": "IN"
+}
+
 `
