@@ -1,4 +1,9 @@
 
+# Démarage du serveur test: ou de dev : 
+
+php -S localhost:8000 -t public
+
+
 # Création d'une catégorie
 POST : http://localhost:8000/api/categories
 
