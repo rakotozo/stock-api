@@ -55,13 +55,9 @@ class Product
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[Groups(['product:read', 'product:write'])]
-    #[ORM\Column(type: Types::DECIMAL, precision: 12, scale: 2)]
-    private ?string $purchasePrice = null;
 
-    #[Groups(['product:read', 'product:write'])]
-    #[ORM\Column(type: Types::DECIMAL, precision: 12, scale: 2)]
-    private ?string $sellingPrice = null;
+
+
 
     #[Groups(['product:read', 'product:write'])]
     #[ORM\Column]
@@ -135,29 +131,6 @@ class Product
         return $this;
     }
 
-    public function getPurchasePrice(): ?string
-    {
-        return $this->purchasePrice;
-    }
-
-    public function setPurchasePrice(string $purchasePrice): static
-    {
-        $this->purchasePrice = $purchasePrice;
-
-        return $this;
-    }
-
-    public function getSellingPrice(): ?string
-    {
-        return $this->sellingPrice;
-    }
-
-    public function setSellingPrice(string $sellingPrice): static
-    {
-        $this->sellingPrice = $sellingPrice;
-
-        return $this;
-    }
 
     public function getMinStock(): ?int
     {
