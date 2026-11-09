@@ -55,3 +55,6 @@ RUN composer install \
 RUN php bin/console cache:clear --env=prod --no-debug
 
 EXPOSE 80
+
+# Démarrer Apache
+CMD ["apache2-foreground"]
