@@ -53,10 +53,19 @@ RUN mkdir -p var/cache var/log \
     && php bin/console cache:clear --env=prod --no-debug \
     && chown -R www-data:www-data var
 
+
+RUN echo "ServerName localhost" > /etc/apache2/conf-available/servername.conf \
+    && a2enconf servername
+
 # Nettoyage du cache Symfony
 RUN php bin/console cache:clear --env=prod --no-debug
 
-EXPOSE 80
+ENV PORT=8080
+
+RUN sed -ri 's/Listen 80/Listen ${PORT}/' /etc/apache2/ports.conf \
+    && sed -ri 's/<VirtualHost \*:80>/<VirtualHost *:${PORT}>/' /etc/apache2/sites-available/000-default.conf
+
+EXPOSE 8080
 
 # Démarrer Apache
 CMD ["apache2-foreground"]
