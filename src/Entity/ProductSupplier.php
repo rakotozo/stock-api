@@ -14,7 +14,7 @@ use ApiPlatform\Metadata\ApiResource;
 #[ORM\Table(name: 'product_supplier')]
 #[ORM\UniqueConstraint(
     name: 'unique_product_supplier',
-    columns: ['product_id', 'supplier_id']
+    columns: ['product_id', 'supplier_id', 'moto_model_id']
 )]
 #[ApiResource(
     normalizationContext: ['groups' => ['product_supplier:read']],
@@ -68,7 +68,9 @@ class ProductSupplier
     #[ORM\OneToMany(targetEntity: StockMovement::class, mappedBy: 'productSupplier')]
     private Collection $stockMovements;
 
-
+    #[Groups(['product_supplier:read', 'product_supplier:write'])]
+    #[ORM\ManyToOne]
+    private ?MotoModel $motoModel = null;
 
 
     public function __construct()
@@ -200,5 +202,17 @@ class ProductSupplier
         }
 
         return bcsub($this->sellingPrice, $this->purchasePrice, 2);
+    }
+
+    public function getMotoModel(): ?MotoModel
+    {
+        return $this->motoModel;
+    }
+
+    public function setMotoModel(?MotoModel $motoModel): static
+    {
+        $this->motoModel = $motoModel;
+
+        return $this;
     }
 }

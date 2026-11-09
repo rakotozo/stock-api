@@ -164,3 +164,31 @@ https://code.claude.com/docs/en/overview
 Claude Code is an agentic coding tool that reads your codebase, edits files, runs commands, and integrates with your development tools. Available in your terminal, IDE, desktop app, and browser.
 
 """
+
+# Test de validation de la synchronisation de mapping code entity vers databse
+
+php bin/console doctrine:schema:validate;
+
+`
+Mapping
+-------
+[OK] The mapping files are correct.
+
+Database
+--------
+[ERROR] The database schema is not in sync with the current mapping file.
+
+`
+
+php bin/console doctrine:schema:update --dump-sql
+
+`
+DROP INDEX unique_product_supplier;
+CREATE UNIQUE INDEX unique_product_supplier ON product_supplier (product_id, supplier_id, moto_model_id);
+`
+`
+TRUNCATE TABLE public.product_supplier, public.stock_movement RESTART IDENTITY;
+TRUNCATE TABLE public.product_supplier RESTART IDENTITY CASCADE;
+
+ou php bin/console dbal:run-sql "TRUNCATE TABLE public.product_supplier, public.stock_movement RESTART IDENTITY"
+`

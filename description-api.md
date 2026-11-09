@@ -180,6 +180,7 @@ POST : http://localhost:8000/api/product_suppliers
     {
     "product": "/api/products/1",
     "supplier": "/api/suppliers/2",
+    "motoModel" : "/api/moto_models/2",
     "quantity" : 12,
     "purchasePrice": "2030.2",
     "sellingPrice" : "25000"
@@ -198,6 +199,7 @@ POST : http://localhost:8000/api/product_suppliers
     "purchasePrice": "2030.20",
     "sellingPrice": "25000.00",
     "createdAt": "2026-11-06T12:04:59+01:00",
+    "motoModel": "/api/moto_models/1",
     "margin": "-1830.20"
     }
 `
