@@ -4,7 +4,7 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.2",
+        "php": "8.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "api-platform/doctrine-orm": "^5.0",
@@ -30,6 +30,7 @@
         "symfony/validator": "7.4.*",
         "symfony/yaml": "7.4.*"
     },
+    "optimize-autoloader": true,
     "config": {
         "allow-plugins": {
             "php-http/discovery": true,
