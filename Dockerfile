@@ -47,8 +47,10 @@ RUN composer install \
     --no-interaction \
     --prefer-dist \
     --optimize-autoloader \
-    --no-scripts \
-    && mkdir -p var/cache var/log \
+    --no-scripts
+
+RUN mkdir -p var/cache var/log \
+    && php bin/console cache:clear --env=prod --no-debug \
     && chown -R www-data:www-data var
 
 # Nettoyage du cache Symfony
