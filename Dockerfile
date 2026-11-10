@@ -57,9 +57,6 @@ RUN mkdir -p var/cache var/log \
 RUN echo "ServerName localhost" > /etc/apache2/conf-available/servername.conf \
     && a2enconf servername
 
-# Nettoyage du cache Symfony
-RUN php bin/console cache:clear --env=prod --no-debug
-
 ENV PORT=8080
 
 RUN sed -ri 's/Listen 80/Listen ${PORT}/' /etc/apache2/ports.conf \
